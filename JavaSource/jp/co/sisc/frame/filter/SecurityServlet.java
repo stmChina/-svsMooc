@@ -20,7 +20,7 @@ import jp.co.sisc.ams.domain.privilege.Privilege;
 import jp.co.sisc.ams.service.privilege.IPrivilegeService;
 import jp.co.sisc.frame.core.constants.Constants;
 import jp.co.sisc.frame.core.utils.RequestUtil;
-import jp.co.sisc.frame.core.utils.armUtil;
+import jp.co.sisc.frame.core.utils.ArmUtil;
 
 import org.springframework.web.context.WebApplicationContext;
 
