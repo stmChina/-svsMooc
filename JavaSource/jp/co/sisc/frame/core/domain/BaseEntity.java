@@ -1,6 +1,6 @@
 package jp.co.sisc.frame.core.domain;
 
-import jp.co.sisc.frame.core.utils.armUtil;
+import jp.co.sisc.frame.core.utils.ArmUtil;
 
 /**
  * 持久化对象抽象类
