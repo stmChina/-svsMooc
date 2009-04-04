@@ -3,46 +3,47 @@ package jp.co.sisc.frame.core.service;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.sisc.frame.core.dao.IBaseDao;
-import jp.co.sisc.frame.core.domain.BaseEntity;
-
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.sisc.frame.core.dao.IBaseDao;
+import jp.co.sisc.frame.core.domain.AbstractVo;
+import jp.co.sisc.frame.core.domain.BaseEntity;
 
 /**
  * 基础Service服务接口实现类
  * @author lnf
  */
-public abstract class BaseServiceImpl<T extends BaseEntity> implements IBaseService<T> {
+public abstract class BaseServiceImpl<T extends AbstractVo> implements IBaseService<T> {
 
 	/**
 	 * 获取基础数据库操作类
 	 * @return
 	 */
-	protected abstract IBaseDao<T> getBaseDao();
+	protected abstract IBaseDao<BaseEntity> getBaseDao();
 
 	@Override
 	public <V extends T> V queryOne(T query) {
-		return getBaseDao().selectOne(query);
+		return null;
 	}
 
 	@Override
 	public <V extends T> V queryById(String id) {
-		return getBaseDao().selectById(id);
+		return null;
 	}
 
 	@Override
 	public <V extends T> List<V> queryList(T query) {
-		return getBaseDao().selectList(query);
+		return null;
 	}
 
 	@Override
 	public <V extends T> List<V> queryAll() {
-		return getBaseDao().selectAll();
+		return null;
 	}
 
 	@Override
 	public <K, V extends T> Map<K, V> queryMap(T query, String mapKey) {
-		return getBaseDao().selectMap(query, mapKey);
+		return null;
 	}
 
 	@Override
@@ -52,17 +53,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements IBaseServ
 
 	@Override
 	public Long queryCount(T query) {
-		return getBaseDao().selectCount(query);
+		return null;
 	}
 
 	@Override
 	public void insert(T entity) {
-		getBaseDao().insert(entity);
 	}
 
 	@Override
 	public int delete(T query) {
-		return getBaseDao().delete(query);
+		return 0;
 	}
 
 	@Override
@@ -77,12 +77,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements IBaseServ
 
 	@Override
 	public int updateById(T entity) {
-		return getBaseDao().updateById(entity);
+		return 0;
 	}
 
 	@Override
 	public int updateByIdSelective(T entity) {
-		return getBaseDao().updateByIdSelective(entity);
+		return 0;
 	}
 
 	@Override
@@ -94,12 +94,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements IBaseServ
 	@Override
 	@Transactional
 	public void insertInBatch(List<T> entityList) {
-		getBaseDao().insertInBatch(entityList);
+
 	}
 
 	@Override
 	@Transactional
 	public void updateInBatch(List<T> entityList) {
-		getBaseDao().updateInBatch(entityList);
+
 	}
 }

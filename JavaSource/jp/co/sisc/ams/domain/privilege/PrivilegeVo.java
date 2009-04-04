@@ -1,12 +1,12 @@
 package jp.co.sisc.ams.domain.privilege;
 
+import jp.co.sisc.frame.core.domain.AbstractVo;
 
 /**
  * 返回给页面的对象,在controller里面转成Json对象
  * @author lnf
  */
-@SuppressWarnings("serial")
-public class PrivilegeVo extends Privilege{
+public class PrivilegeVo extends AbstractVo{
 	protected String user_id;
 	protected String user_nm;
 	protected String pwd;

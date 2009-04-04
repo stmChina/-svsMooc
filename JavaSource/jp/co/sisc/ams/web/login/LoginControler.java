@@ -1,14 +1,7 @@
 package jp.co.sisc.ams.web.login;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import jp.co.sisc.ams.domain.privilege.Privilege;
-import jp.co.sisc.ams.domain.privilege.PrivilegeVo;
-import jp.co.sisc.ams.service.privilege.IPrivilegeService;
-import jp.co.sisc.frame.core.constants.Constants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
+import jp.co.sisc.ams.domain.privilege.PrivilegeVo;
+import jp.co.sisc.ams.service.privilege.IPrivilegeService;
+import jp.co.sisc.frame.core.constants.Constants;
 
 /**
  * 用户登录Controler
@@ -36,9 +31,8 @@ public class LoginControler {
 	 * @param Privilege
 	 * @return Json对象
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Object login(Privilege query) {
+	public Object login(PrivilegeVo query) {
 		// 查找用户是否存在
 		PrivilegeVo user = privilegeService.selectUser(query);
 		if (user == null) {

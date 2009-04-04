@@ -1,8 +1,8 @@
 package jp.co.sisc.ams.service.privilege;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +10,17 @@ import jp.co.sisc.ams.dao.privilege.IPrivilegeDao;
 import jp.co.sisc.ams.domain.privilege.Privilege;
 import jp.co.sisc.ams.domain.privilege.PrivilegeVo;
 import jp.co.sisc.frame.core.dao.IBaseDao;
+import jp.co.sisc.frame.core.domain.AbstractVo;
 import jp.co.sisc.frame.core.domain.BaseEntity;
 import jp.co.sisc.frame.core.service.BaseServiceImpl;
+import jp.co.sisc.frame.core.utils.BeanConvertUtil;
 
 /**
  * 权限服务类接口实现
  * @author lnf
  */
 @Service
-public class PrivilegeServiceImpl extends BaseServiceImpl<BaseEntity> implements IPrivilegeService {
+public class PrivilegeServiceImpl extends BaseServiceImpl<AbstractVo> implements IPrivilegeService {
 	@Autowired
 	private IPrivilegeDao privilegeDao;
 
@@ -28,23 +30,9 @@ public class PrivilegeServiceImpl extends BaseServiceImpl<BaseEntity> implements
 	}
 
 	@Override
-	public PrivilegeVo selectUser(BaseEntity query) {
-		Privilege privilege = privilegeDao.selectUser(query);
-		if (privilege != null) {
-			
-		}
-		// 中间转换 以后再加
-		PrivilegeVo vo = new PrivilegeVo();
-		try {
-			BeanUtils.copyProperties(vo, privilege);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return vo;
+	public PrivilegeVo selectUser(AbstractVo query) {
+		Privilege user = privilegeDao.selectUser((BaseEntity) BeanConvertUtil.copyProperties(new Privilege(), query));
+		return (PrivilegeVo)BeanConvertUtil.copyProperties(new PrivilegeVo(), user);
 	}
+
 }

@@ -3,13 +3,13 @@ package jp.co.sisc.frame.core.service;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.sisc.frame.core.domain.BaseEntity;
+import jp.co.sisc.frame.core.domain.AbstractVo;
 
 /**
  * 基础的Service接口
  * @author lnf
  */
-public interface IBaseService<T extends BaseEntity> {
+public interface IBaseService<T extends AbstractVo> {
 	/**
 	 * 查询一个对象，如果返回的结果多于一个对象将会抛出TooManyResultsException
 	 * @param obj 查询对象，不能为null
