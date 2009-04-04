@@ -30,6 +30,9 @@ public class PrivilegeServiceImpl extends BaseServiceImpl<BaseEntity> implements
 	@Override
 	public PrivilegeVo selectUser(BaseEntity query) {
 		Privilege privilege = privilegeDao.selectUser(query);
+		if (privilege != null) {
+			
+		}
 		// 中间转换 以后再加
 		PrivilegeVo vo = new PrivilegeVo();
 		try {

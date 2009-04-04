@@ -7,7 +7,7 @@ import java.util.Vector;
  * @author lnf
  *
  */
-public class armUtil {
+public class ArmUtil {
 	public static final boolean isEmpty(String x_str) {
 		return x_str == null || x_str.length() == 0;
 	}

@@ -1,5 +1,6 @@
 package jp.co.sisc.frame.core.utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -7,6 +8,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.beanutils.BeanUtils;
+
+import jp.co.sisc.frame.core.domain.AbstractVo;
+import jp.co.sisc.frame.core.domain.BaseEntity;
 
 /**
  * 对Bean进行操作的相关工具方法
@@ -64,5 +69,24 @@ public class BeanConvertUtil {
 			return ((Class<?>) p[0]);
 		}
 		return null;
+	}
+
+	/**
+	 * PO -> VO的转化层
+	 * @param target
+	 * @param source
+	 * @return
+	 */
+	public static AbstractVo beanCopy (AbstractVo target, BaseEntity source) {
+		try {
+			BeanUtils.copyProperties(target, source);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return target;
 	}
 }

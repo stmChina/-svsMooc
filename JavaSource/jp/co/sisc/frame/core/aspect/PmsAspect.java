@@ -2,10 +2,6 @@ package jp.co.sisc.frame.core.aspect;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.co.sisc.ams.domain.privilege.PrivilegeVo;
-import jp.co.sisc.frame.core.domain.BaseEntity;
-import jp.co.sisc.frame.core.utils.armUtil;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,6 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import jp.co.sisc.ams.domain.privilege.PrivilegeVo;
+import jp.co.sisc.frame.core.domain.BaseEntity;
+import jp.co.sisc.frame.core.utils.ArmUtil;
 
 /**
  * 配置插入pms_i_usr等的切面（项目暂时不用）
@@ -45,7 +45,7 @@ public class PmsAspect {
 				if (args[i] instanceof BaseEntity) {
 					// 如果被切入的方法是insert*
 					BaseEntity entity = (BaseEntity)args[i];
-					if (armUtil.equals("insert", joinPoint.getSignature().getName())) {
+					if (ArmUtil.equals("insert", joinPoint.getSignature().getName())) {
 						entity.setPms_i_class(joinPoint.getSignature().getDeclaringTypeName());
 						entity.setPms_i_usr(user==null?null:user.getUser_id());
 					} else {
