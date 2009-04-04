@@ -55,7 +55,7 @@ public abstract class BaseEntity implements IBaseEntity {
 		String pageSize = getRows();
 		String pageNum = getPage();
 		// 分页设置
-		if (!armUtil.isEmpty(pageSize) && !armUtil.isEmpty(pageNum)) {
+		if (!ArmUtil.isEmpty(pageSize) && !ArmUtil.isEmpty(pageNum)) {
 			int num = Integer.parseInt(pageNum);
 			setLimit(Integer.parseInt(pageSize));
 			setOffset((num - 1) * Integer.parseInt(pageSize));
