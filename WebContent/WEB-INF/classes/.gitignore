@@ -1,0 +1,9 @@
+/ehcache.xml
+/jdbc.properties
+/jp/
+/log4j.properties
+/resource/
+/spring-config.xml
+/spring-ehcache.xml
+/spring-mvc.xml
+/sqlMapConfig.xml

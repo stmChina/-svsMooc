@@ -1,0 +1,130 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="jp.co.sisc.ams.domain.privilege.Privilege" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>社内管理系统</title>
+	<jsp:include page="../../inc/meta.jsp"></jsp:include>
+	<jsp:include page="../../inc/easyui.jsp"></jsp:include>
+</head>
+	<%
+		if (request == null || request.getSession().getAttribute("user_menu") == null) {
+	%>
+		<script type="text/javascript">
+			window.top.location.href = '<%=request.getContextPath()%>/index.jsp';
+		</script>
+	<%
+		} else {
+	%>
+<body>
+	<div id="main" class="easyui-layout" fit="true">
+		<div data-options="region:'north'" style="height:50px"></div>
+		<div data-options="region:'south',split:true" style="height:30px;"></div>
+		<div data-options="region:'west',split:true" title="メニュー" style="width:150px;">
+			<div class="easyui-accordion" data-options="fit:true,border:false">
+				<%
+					Map treeMap = (Map)request.getSession().getAttribute("user_menu");
+					if(treeMap != null) {
+						List menuParentList = (List)treeMap.get("menuParentList");
+						List menuChildList = (List)treeMap.get("menuChildList");
+						if (menuParentList != null ) {
+							for (int i=0; i<menuParentList.size();i++) {
+								Privilege parent = (Privilege)menuParentList.get(i);
+				%>
+							<div id="menu_accordion<%=i%>" title="<%=parent.getMenu_descr()%>" style="padding:10px;">
+							<%
+							if(menuChildList != null) {
+								for (int j=0;j<menuChildList.size();j++) {
+									Privilege child = (Privilege)menuChildList.get(j);
+									if (child != null && parent.getMenu_id().equals(child.getMenu_pid())) {
+							%>
+								<table>
+								<tr>
+								<td>
+								<li iconCls="icon-gears">
+								<a class="e-link" href="#" onclick="addTab(<%=j%>, '<%=request.getContextPath()%><%=child.getMenu_url()%>', '<%=child.getMenu_descr()%>')"><%=child.getMenu_descr()%></a>
+								</li>
+								</td>
+								</tr>
+								</table>
+							<%
+										}
+									}
+								}
+							%>
+							</div>
+				<%		
+							}
+						}
+					}
+				%>
+				
+			</div>
+		</div>
+		<div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
+			<div id="main_tabs" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			</div>
+		</div>
+	</div>
+</body>
+	<%
+		}
+	%>
+<script type="text/javascript">
+	// 多语言设定
+	document.title = message.mst1600_msg001;
+	$("#menu_accordion").attr("title",message.mst1600_msg002);
+	// 宽度和高度设定
+	$('#main').height(document.documentElement.clientHeight - 40);
+	$('#main').width($(document.body).width());
+
+	// 打开Tab页
+	function addTab(index, url, title){
+		if (index == 1) {
+			// 協力会社マスタ
+			//title = message.mst1600_msg003;
+		}
+		//TODO 随着模块的增加需要增加模块
+		if ($("#main_tabs").tabs("exists", title)){
+			$('#main_tabs').tabs('select', title);
+		} else {
+			var content = '<iframe scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:99%;"></iframe>';
+			$('#main_tabs').tabs('add',{
+				title:title,
+				content:content,
+				closable:true
+			});
+		}
+	}
+	
+	
+	
+	
+	var contents = new Object()[];
+					// 生成菜单里面的链接
+					$.each(data, function(idx, value) {
+						if (value.menu_pid != null) {
+							// 子菜单
+							contents[idx].parentId = value.menu_pid;
+							contents[idx].contex = '<a class="e-link" href="#" onclick="addTab(' + idx + ',' + value.menu_url  + ',' + value.menu_descr) + '">' + value.menu_descr + '</a>';
+						}
+					});
+					
+					$.each(data, function(idx, value) {
+						var selected = false;
+						var contents = "";
+						if (idx == 0) selected = true;
+						if (value.menu_pid == null) {
+							// 父节点id
+							menu_parent = value.menu_id;
+							// 父亲节点增加accordion
+							$('#accordion').accordion('add', {
+								title: value.menu_descr,
+								selected: selected
+							});
+						}
+					});
+</script>
+</html>

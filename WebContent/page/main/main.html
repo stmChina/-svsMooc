@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>社内管理系统</title>
+	<link rel="stylesheet" type="text/css" href="../../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../../css/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../../css/main.css">
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.json.js"></script>
+	<script type="text/javascript" src="../../js/jquery.form.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+</head>
+<body>
+	<div id="main" class="easyui-layout" fit="true">
+		<div data-options="region:'north'" style="height:50px"></div>
+		<div data-options="region:'south',split:true" style="height:30px;"></div>
+		<div data-options="region:'west',split:true" title="メニュー" style="width:150px;">
+			<div id="accordion" class="easyui-accordion" data-options="fit:true,border:false">
+			</div>
+		</div>
+		<div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
+			<div id="main_tabs" class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 多语言设定
+		//document.title = messages.mst1600_msg001;
+		//$("#menu_accordion").attr("title",messages.mst1600_msg002);
+		// Menu生成
+		$.ajax({
+				url: serverContext + '/login/menu',
+				type: 'POST',
+				async: false,
+				dataType: 'JSON',
+				success: function(data){
+					// 生成菜单
+					// 父节点和子节点分别存入数组
+					var menuParentArray = [];
+					var menuChildArray = [];
+					var j = 0;
+					var m = 0;
+					for (var i = 0; i < data.length; i++) {
+						if (data[i].menu_pid == null) {
+							menuParentArray[j] = data[i];
+							j++;
+						} else {
+							menuChildArray[m] = data[i];
+							m++;
+						}
+					}
+					// 根据父节点menuid生成子节点
+					for (var i = 0; i < menuParentArray.length; i++) {
+						var content;
+						var defaultSelect = false;
+						if (i==0) defaultSelect = true;
+						for(var j = 0; j < menuChildArray.length; j++) {
+							if (menuParentArray[i].menu_id == menuChildArray[j].menu_pid) {
+								content = '<p> \n';
+								content = content + '&nbsp;&nbsp;<a class="e-link" href="#" onclick="addTab(' 
+												+ '\'' + j + '\''
+												+ ',' 
+												+  '\'' + serverContext + menuChildArray[j].menu_url + '?random=' + getRandom(99999) + '\''
+												+ ',' 
+												+  '\'' + menuChildArray[j].menu_descr + '\''
+												+ ')">' 
+												+ menuChildArray[j].menu_descr 
+												+ '</a> \n';
+								content = content + '</p> \n';
+							}
+						}
+						
+						// 父亲节点增加accordion
+						$('#accordion').accordion('add', {
+							title: menuParentArray[i].menu_descr,
+							content: content,
+							selected: defaultSelect
+						});
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					alert("Ajax返回JSON失败,原因:" + textStatus);
+				}
+			});
+	} );
+	// 宽度和高度设定
+	$('#main').height(document.documentElement.clientHeight - 40);
+	$('#main').width($(document.body).width());
+			// 获取sessionId
+			$.ajax({
+				url: serverContext + '/login/session',
+				type: 'POST',
+				async: false,
+				dataType: 'TEXT',
+				success: function(data){
+					setCookie("sessionId", data);
+				///
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					alert("Ajax返回JSON失败,原因:" + textStatus);
+				}
+			});
+		
+
+	// 权限设置
+
+	// 打开Tab页
+	function addTab(index, url, title){
+		if (index == 1) {
+			// 協力会社マスタ
+			//title = message.mst1600_msg003;
+		}
+		//TODO 随着模块的增加需要增加模块
+		if ($("#main_tabs").tabs("exists", title)){
+			$('#main_tabs').tabs('select', title);
+		} else {
+			var content = '<iframe scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:99%;"></iframe>';
+			$('#main_tabs').tabs('add',{
+				title:title,
+				content:content,
+				closable:true
+			});
+		}
+	}
+</script>
+</body>
+</html>
