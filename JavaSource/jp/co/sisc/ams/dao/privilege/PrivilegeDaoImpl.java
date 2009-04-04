@@ -14,11 +14,17 @@ import jp.co.sisc.frame.core.exception.DaoException;
 @Repository
 public class PrivilegeDaoImpl extends BaseDaoImpl<BaseEntity> implements IPrivilegeDao {
 
+	/**
+	 * 权限类PO对应Mapping Name Space
+	 */
 	@Override
 	protected String getDefaultSqlNamespace() {
 		return Privilege.class.getCanonicalName();
 	}
 
+	/**
+	 * 根据用户名和密码取得用户PO
+	 */
 	@Override
 	public Privilege selectUser(BaseEntity query) {
 		try {
