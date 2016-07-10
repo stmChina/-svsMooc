@@ -19,6 +19,8 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	</context:component-scan>
 	
+	
+	
 	<!-- 用于页面跳转,根据请求的不同跳转到不同页面，如请求index.do则跳转到/WEB-INF/jsp/index.jsp
 	<bean id="findJsp" class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -30,14 +32,14 @@
 		</property>
 	</bean>
  	-->
-	<!-- 视图解析 返回的视图模型数据需要经过jstl来处理
+	<!-- 视图解析 返回的视图模型数据需要经过jstl来处理 -->
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="prefix" value="/page/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	 -->
+	 
 	<!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->
 	<mvc:default-servlet-handler />
 

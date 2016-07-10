@@ -19,6 +19,7 @@ CREATE TABLE Answer
 (
   aid integer NOT NULL,
   acontent character varying(200) NOT NULL,
+  correctf character(1) NOT NULL DEFAULT 0,
   ins_dt timestamp with time zone,
   ins_userid character varying(50),
   upd_dt timestamp with time zone,
@@ -31,6 +32,14 @@ WITH (
 ALTER TABLE Answer
   OWNER TO postgres;
 
+CREATE SEQUENCE answer_id_seq  
+START WITH 41  
+INCREMENT BY 1  
+NO MINVALUE  
+NO MAXVALUE  
+CACHE 1; 
+
+alter table answer alter column aid set default nextval('answer_id_seq');  
 
 -- Table: Q_A_Relation
 
@@ -52,28 +61,6 @@ WITH (
 ALTER TABLE Q_A_Relation
   OWNER TO postgres;
 
-
--- Table: Q_CA_Relation
-
--- DROP TABLE Q_CA_Relation;
-
-CREATE TABLE Q_CA_Relation
-(
-  aid integer NOT NULL,
-  qid integer NOT NULL,
-  ins_dt timestamp with time zone,
-  ins_userid character varying(50),
-  upd_dt timestamp with time zone,
-  upd_userid character varying(50),
-  CONSTRAINT pri_qcaid PRIMARY KEY (aid, qid)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE Q_CA_Relation
-  OWNER TO postgres;
-
-
 -- Table: Question
 
 -- DROP TABLE Question;
@@ -88,6 +75,7 @@ CREATE TABLE Question
   upd_userid character varying(50),
   schtime integer,
   score numeric,
+  multiselect character(1) NOT NULL DEFAULT 0,
   CONSTRAINT pri_qid PRIMARY KEY (qid)
 )
 WITH (
@@ -96,6 +84,14 @@ WITH (
 ALTER TABLE Question
   OWNER TO postgres;
 
+CREATE SEQUENCE quest_id_seq  
+START WITH 11  
+INCREMENT BY 1  
+NO MINVALUE  
+NO MAXVALUE  
+CACHE 1; 
+
+alter table question alter column qid set default nextval('quest_id_seq');  
 
 -- Table: TestResult
 
@@ -119,7 +115,15 @@ WITH (
 ALTER TABLE TestResult
   OWNER TO postgres;
 
+CREATE SEQUENCE TestResult_id_seq  
+START WITH 41  
+INCREMENT BY 1  
+NO MINVALUE  
+NO MAXVALUE  
+CACHE 1; 
 
+alter table TestResult alter column rid set default nextval('TestResult_id_seq');  
+  
 -- Table: TestResultDDtl
 
 -- DROP TABLE TestResultDDtl;
@@ -167,3 +171,11 @@ WITH (
 ALTER TABLE TestResultDtl
   OWNER TO postgres;
 
+CREATE SEQUENCE TestResultDtl_id_seq  
+START WITH 41  
+INCREMENT BY 1  
+NO MINVALUE  
+NO MAXVALUE  
+CACHE 1; 
+
+alter table TestResultDtl alter column rdid set default nextval('TestResultDtl_id_seq');  

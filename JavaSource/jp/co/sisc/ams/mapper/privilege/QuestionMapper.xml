@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jp.co.sisc.ams.domain.privilege.Question" >
+<cache type="org.mybatis.caches.ehcache.LoggingEhcache" readOnly="false"/>
+	<resultMap id="BaseResultMap" type="jp.co.sisc.ams.domain.privilege.Question">
+		<id property="qid" column="qid"/>
+		<result property="qContent" column="qContent"/>
+		<result property="schTime" column="schTime"/>
+		<result property="score" column="score"/>
+		<result property="multiSelect" column="multiSelect"/>
+		<collection property="answers" ofType="jp.co.sisc.ams.domain.privilege.Answer">
+			<id property="aid" column="aid"/>
+			<result property="aContent" column="aContent"/>
+			<result property="correctf" column="correctf"/>
+		</collection>
+	</resultMap>
+
+	<select id="getQuestions" resultMap="BaseResultMap">
+		select 
+		       question.qid as qid
+		      ,question.qcontent as qContent
+		      ,question.schtime as schTime
+		      ,question.score as score
+		      ,question.multiselect as multiSelect
+		      ,answer.aid as aid
+		      ,answer.acontent as aContent
+		      ,answer.correctf as correctf
+		from Question
+		inner join Q_A_Relation
+		   on Q_A_Relation.qid = Question.qid
+		inner join Answer
+		   on Answer.aid = Q_A_Relation.aid
+	</select>
+
+	
+</mapper>
