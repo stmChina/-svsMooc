@@ -11,11 +11,11 @@ CREATE DATABASE "TestSys"
        CONNECTION LIMIT = -1;
 
 
--- Table: public."Answer"
+-- Table: Answer
 
--- DROP TABLE public."Answer";
+-- DROP TABLE Answer;
 
-CREATE TABLE public."Answer"
+CREATE TABLE Answer
 (
   aid integer NOT NULL,
   acontent character varying(200) NOT NULL,
@@ -28,15 +28,15 @@ CREATE TABLE public."Answer"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."Answer"
+ALTER TABLE Answer
   OWNER TO postgres;
 
 
--- Table: public."Q_A_Relation"
+-- Table: Q_A_Relation
 
--- DROP TABLE public."Q_A_Relation";
+-- DROP TABLE Q_A_Relation;
 
-CREATE TABLE public."Q_A_Relation"
+CREATE TABLE Q_A_Relation
 (
   aid integer NOT NULL,
   qid integer NOT NULL,
@@ -49,15 +49,15 @@ CREATE TABLE public."Q_A_Relation"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."Q_A_Relation"
+ALTER TABLE Q_A_Relation
   OWNER TO postgres;
 
 
--- Table: public."Q_CA_Relation"
+-- Table: Q_CA_Relation
 
--- DROP TABLE public."Q_CA_Relation";
+-- DROP TABLE Q_CA_Relation;
 
-CREATE TABLE public."Q_CA_Relation"
+CREATE TABLE Q_CA_Relation
 (
   aid integer NOT NULL,
   qid integer NOT NULL,
@@ -70,15 +70,15 @@ CREATE TABLE public."Q_CA_Relation"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."Q_CA_Relation"
+ALTER TABLE Q_CA_Relation
   OWNER TO postgres;
 
 
--- Table: public."Question"
+-- Table: Question
 
--- DROP TABLE public."Question";
+-- DROP TABLE Question;
 
-CREATE TABLE public."Question"
+CREATE TABLE Question
 (
   qid integer NOT NULL,
   qcontent character varying(200) NOT NULL,
@@ -93,15 +93,15 @@ CREATE TABLE public."Question"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."Question"
+ALTER TABLE Question
   OWNER TO postgres;
 
 
--- Table: public."TestResult"
+-- Table: TestResult
 
--- DROP TABLE public."TestResult";
+-- DROP TABLE TestResult;
 
-CREATE TABLE public."TestResult"
+CREATE TABLE TestResult
 (
   rid integer NOT NULL,
   schtime integer,
@@ -116,15 +116,15 @@ CREATE TABLE public."TestResult"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."TestResult"
+ALTER TABLE TestResult
   OWNER TO postgres;
 
 
--- Table: public."TestResultDDtl"
+-- Table: TestResultDDtl
 
--- DROP TABLE public."TestResultDDtl";
+-- DROP TABLE TestResultDDtl;
 
-CREATE TABLE public."TestResultDDtl"
+CREATE TABLE TestResultDDtl
 (
   rdid integer NOT NULL,
   aid integer NOT NULL,
@@ -139,15 +139,15 @@ CREATE TABLE public."TestResultDDtl"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."TestResultDDtl"
+ALTER TABLE TestResultDDtl
   OWNER TO postgres;
 
 
--- Table: public."TestResultDtl"
+-- Table: TestResultDtl
 
--- DROP TABLE public."TestResultDtl";
+-- DROP TABLE TestResultDtl;
 
-CREATE TABLE public."TestResultDtl"
+CREATE TABLE TestResultDtl
 (
   rdid integer NOT NULL,
   rid integer NOT NULL,
@@ -163,5 +163,6 @@ CREATE TABLE public."TestResultDtl"
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public."TestResultDtl"
+ALTER TABLE TestResultDtl
   OWNER TO postgres;
+
