@@ -154,6 +154,7 @@ CREATE TABLE TestResultDtl
   qid integer NOT NULL,
   casttime integer,
   correct character(1),
+  disorder int NOT NULL,
   ins_dt timestamp with time zone,
   ins_userid character varying(50),
   upd_dt timestamp with time zone,
